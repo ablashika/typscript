@@ -1,6 +1,6 @@
 // console.log("Hello world!");
-function greet(person, date) {
-    console.log(`Hello ${person}, today is ${date}!`);
-  }
-   
-  greet("Brendan", "45");
+function greet(person: string, date: Date) {
+  console.log(`Hello ${person}, today is ${date.toDateString()}!`);
+}
+ 
+greet("Maddison", new Date())
