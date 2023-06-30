@@ -15,7 +15,7 @@ greet("Maddison", new Date())
 // obj = "hello";
 // const n: number = obj;
 
-const namess = ["Alice", "Bob", "Eve"];
+const names = ["Alice", "Bob", "Eve"];
  
 // Contextual typing for function - parameter s inferred to have type string
 names.forEach(function (s) {
@@ -23,7 +23,7 @@ names.forEach(function (s) {
 });
  
 // Contextual typing also applies to arrow functions
-namess.forEach((s) => {
+names.forEach((s) => {
   console.log(s.toUpperCase());
 });
 
@@ -68,3 +68,38 @@ function printId(id: number | string) {
 // compiler during static analysis.
 let myVariable: any = "Hello, TypeScript!";
 let lengths: number = (<string>myVariable).length;
+
+
+// literal types
+
+//literal types are situation where the value, or the literals can become a type,
+
+let x :"hello" = "hello"
+
+x = "hello"
+
+//you can also use union type here where,
+let y:  "hello" | "hii" = "hii"
+
+y = "hello"
+
+//y and x can not be anyother time
+
+// literal inference
+
+declare function handleRequest(url: string, method: "GET" | "POST"): void;
+ 
+// const req = { url: "https://example.com", method: "GET" };
+// handleRequest(req.url, req.method);
+
+
+
+// Argument of type 'string' is not assignable to parameter of type '"GET" | "POST"'.
+//beacasue req.method, the method as a property is a string which not the case because 
+//method has a type "get" and "post". this is where we can use type asserstion
+
+
+// Change 1:
+const req = { url: "https://example.com", method: "GET" as "GET" };
+// Change 2
+handleRequest(req.url, req.method as "GET");
