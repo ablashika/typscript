@@ -103,3 +103,9 @@ declare function handleRequest(url: string, method: "GET" | "POST"): void;
 const req = { url: "https://example.com", method: "GET" as "GET" };
 // Change 2
 handleRequest(req.url, req.method as "GET");
+
+
+// Another way to do this You can use as const to convert the entire object to be type literals:
+
+const reqs = { url: "https://example.com", method: "GET" } as const;
+handleRequest(reqs.url, reqs.method);
