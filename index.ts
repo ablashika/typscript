@@ -78,16 +78,16 @@ let x :"hello" = "hello"
 
 x = "hello"
 
-//you can also use union type here where,
+// //you can also use union type here where,
 let y:  "hello" | "hii" = "hii"
 
 y = "hello"
 
-//y and x can not be anyother time
+// //y and x can not be anyother time
 
-// literal inference
+// // literal inference
 
-declare function handleRequest(url: string, method: "GET" | "POST"): void;
+// declare function handleRequest(url: string, method: "GET" | "POST"): void;
  
 // const req = { url: "https://example.com", method: "GET" };
 // handleRequest(req.url, req.method);
@@ -99,13 +99,67 @@ declare function handleRequest(url: string, method: "GET" | "POST"): void;
 //method has a type "get" and "post". this is where we can use type asserstion
 
 
-// Change 1:
-const req = { url: "https://example.com", method: "GET" as "GET" };
-// Change 2
-handleRequest(req.url, req.method as "GET");
+// // Change 1:
+// const req = { url: "https://example.com", method: "GET" as "GET" };
+// // Change 2
+// handleRequest(req.url, req.method as "GET");
 
 
-// Another way to do this You can use as const to convert the entire object to be type literals:
+// // Another way to do this You can use as const to convert the entire object to be type literals:
 
-const reqs = { url: "https://example.com", method: "GET" } as const;
-handleRequest(reqs.url, reqs.method);
+// const reqs = { url: "https://example.com", method: "GET" } as const;
+// handleRequest(reqs.url, reqs.method);
+
+
+//narrowing
+
+
+//control flow analysis
+function processValue(value: string | number): void {
+  if (typeof value === "string") {
+    // Inside this block, TypeScript narrows down the type of `value` to `string`
+    console.log(value.toUpperCase());
+  } else {
+    // Inside this block, TypeScript narrows down the type of `value` to `number`
+    console.log(value.toFixed(2));
+  }
+
+  // After the conditional blocks, TypeScript knows that `value` can only be `string` or `number`
+  // and does not allow access to any other methods or properties specific to other types.
+  // For example, the following line would result in a compilation error:
+  // console.log(value.length); // Error: Property 'length' does not exist on type 'string | number'.
+}
+
+
+// Function Type Expressions
+// The simplest way to describe a function is with a function 
+// type expression. These types are syntactically similar to arrow functions:
+
+function greeter(fn: (a: string) => void) {
+  fn("Hello, World");
+}
+ 
+function printToConsole(s: string) {
+  console.log(s);
+}
+ 
+greeter(printToConsole);
+
+//function signature
+
+type addFunction = (a: number, b:number) => number
+
+//  when using the traditional function syntax, 
+//you cannot directly assign it to a variable with a type annotation.
+// function add (  addFunction)  {
+
+// }
+// cannot be written hence;
+
+const add: addFunction = function (a, b){
+  return a + b;
+}
+
+console.log(1 + 4)
+
+// Construct Signatures
